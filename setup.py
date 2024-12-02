@@ -7,20 +7,26 @@ from setuptools import find_packages, setup
 _deps = [
     "torch",
     "xformers",
-    "diffusers==0.24.0",
+    "diffusers",
     "transformers",
     "accelerate",
+    "huggingface-hub",
+    "sentencepiece",
+    "tokenizer",
     "fire",
     "omegaconf",
     "cuda-python",
-    "onnx==1.15.0",
-    "onnxruntime==1.16.3",
-    "protobuf==3.20.2",
+    "onnx",
+    "onnxruntime",
+    "protobuf",
     "colored",
-    "pywin32;sys_platform == 'win32'"
+    "peft",
+    "pywin32;sys_platform == 'win32'",
 ]
 
-deps = {b: a for a, b in (re.findall(r"^(([^!=<>~]+)(?:[!=<>~].*)?$)", x)[0] for x in _deps)}
+deps = {
+    b: a for a, b in (re.findall(r"^(([^!=<>~]+)(?:[!=<>~].*)?$)", x)[0] for x in _deps)
+}
 
 
 def deps_list(*pkgs):
@@ -30,7 +36,9 @@ def deps_list(*pkgs):
 extras = {}
 extras["xformers"] = deps_list("xformers")
 extras["torch"] = deps_list("torch", "accelerate")
-extras["tensorrt"] = deps_list("protobuf", "cuda-python", "onnx", "onnxruntime", "colored")
+extras["tensorrt"] = deps_list(
+    "protobuf", "cuda-python", "onnx", "onnxruntime", "colored"
+)
 
 extras["dev"] = extras["xformers"] + extras["torch"] + extras["tensorrt"]
 
